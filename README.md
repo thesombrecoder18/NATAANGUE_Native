@@ -1,50 +1,141 @@
-# Welcome to your Expo app 👋
+# 🌾 NAATANGUE - Application de Traçabilité Agricole
 
-This is an [Expo](https://expo.dev) project created with [`create-expo-app`](https://www.npmjs.com/package/create-expo-app).
+## 📋 Description
 
-## Get started
+**NAATANGUE** est une application mobile native développée avec React Native et Expo pour la traçabilité agricole. Elle permet aux acteurs de la chaîne alimentaire (Producteurs, Transporteurs, Distributeurs, Consommateurs) de suivre et tracer les produits agricoles.
 
-1. Install dependencies
+## 🛠️ Technologies
 
-   ```bash
-   npm install
-   ```
+- **React Native** + **Expo** + **TypeScript**
+- **Expo Router** pour la navigation
+- **Stockage local** avec AsyncStorage
+- **Material Icons** pour les icônes
 
-2. Start the app
+## 🚀 Installation et Lancement
 
-   ```bash
-   npx expo start
-   ```
+### 📋 Prérequis
+- **Node.js** (version 18+)
+- **Expo CLI** : `npm install -g @expo/cli`
+- **Android Studio** (pour Android)
+- **Xcode** (pour iOS - macOS uniquement)
 
-In the output, you'll find options to open the app in a
-
-- [development build](https://docs.expo.dev/develop/development-builds/introduction/)
-- [Android emulator](https://docs.expo.dev/workflow/android-studio-emulator/)
-- [iOS simulator](https://docs.expo.dev/workflow/ios-simulator/)
-- [Expo Go](https://expo.dev/go), a limited sandbox for trying out app development with Expo
-
-You can start developing by editing the files inside the **app** directory. This project uses [file-based routing](https://docs.expo.dev/router/introduction).
-
-## Get a fresh project
-
-When you're ready, run:
-
+### 🔧 Installation
 ```bash
-npm run reset-project
+# 1. Cloner le projet
+git clone <repository-url>
+cd NATAANGUE_Native
+
+# 2. Installer les dépendances
+npm install
+
+# 3. Lancer l'application
+npm start
 ```
 
-This command will move the starter code to the **app-example** directory and create a blank **app** directory where you can start developing.
+### 📱 Lancement par Plateforme
 
-## Learn more
+**Android :**
+```bash
+npm run android
+```
 
-To learn more about developing your project with Expo, look at the following resources:
+**iOS :**
+```bash
+npm run ios
+```
 
-- [Expo documentation](https://docs.expo.dev/): Learn fundamentals, or go into advanced topics with our [guides](https://docs.expo.dev/guides).
-- [Learn Expo tutorial](https://docs.expo.dev/tutorial/introduction/): Follow a step-by-step tutorial where you'll create a project that runs on Android, iOS, and the web.
+**Web :**
+```bash
+npm run web
+```
 
-## Join the community
+### 🐛 Résolution des Problèmes
 
-Join our community of developers creating universal apps.
+**Port 8081 occupé :**
+```bash
+npx kill-port 8081
+# Ou utiliser un autre port
+expo start --port 8082
+```
 
-- [Expo on GitHub](https://github.com/expo/expo): View our open source platform and contribute.
-- [Discord community](https://chat.expo.dev): Chat with Expo users and ask questions.
+**Erreur "Cannot find module" :**
+```bash
+rm -rf node_modules
+npm install
+```
+
+**Nettoyer le cache :**
+```bash
+expo r -c
+npm cache clean --force
+```
+
+## 📁 Structure du Projet
+
+```
+NATAANGUE_Native/
+├── app/                    # Pages de l'application
+│   ├── (tabs)/            # Navigation par onglets
+│   │   ├── index.tsx      # Page d'accueil
+│   │   └── dashboard.tsx  # Dashboard personnalisé
+│   ├── login.tsx          # Page de connexion
+│   ├── register.tsx       # Page d'inscription
+│   └── forgot-password.tsx # Réinitialisation mot de passe
+├── components/            # Composants réutilisables
+├── contexts/              # Contextes React (Auth)
+├── services/              # Services (stockage local)
+├── constants/             # Constantes (couleurs, thème)
+├── hooks/                 # Hooks personnalisés
+├── package.json          # Dépendances et scripts
+├── app.json              # Configuration Expo
+├── tsconfig.json         # Configuration TypeScript
+└── metro.config.js       # Configuration Metro
+```
+
+## 📱 Fonctionnalités
+
+### 👥 **Rôles Disponibles**
+- 🌱 **Producteur** : Gère les cultures et lots
+- 🚛 **Transporteur** : Suit les transports
+- 🏪 **Distributeur** : Gère l'inventaire
+- 👤 **Consommateur** : Scanne les QR codes
+
+### 🔐 **Authentification**
+- **Inscription** avec sélection de rôle
+- **Connexion** par nom d'utilisateur/téléphone
+- **Réinitialisation** de mot de passe par email
+- **Stockage local** des données utilisateurs
+
+## 🤝 Contribution
+
+1. **Fork** le projet
+2. **Créer** une branche feature (`git checkout -b feature/AmazingFeature`)
+3. **Commit** les changements (`git commit -m 'Add some AmazingFeature'`)
+4. **Push** vers la branche (`git push origin feature/AmazingFeature`)
+5. **Ouvrir** une Pull Request
+
+## 📄 Licence
+
+Ce projet est sous licence MIT. Voir le fichier `LICENSE` pour plus de détails.
+
+## 📞 Support
+
+Pour toute question ou problème :
+- **Issues GitHub** : [Créer une issue](https://github.com/username/NATAANGUE_Native/issues)
+- **Email** : support@naatangue.com
+- **Documentation** : [Wiki du projet](https://github.com/username/NATAANGUE_Native/wiki)
+
+## 🌟 Fonctionnalités Futures
+
+- [ ] **Scanner QR Code** intégré
+- [ ] **Notifications push** pour les mises à jour
+- [ ] **Géolocalisation** des produits
+- [ ] **Intégration blockchain** pour la traçabilité
+- [ ] **API backend** pour la synchronisation
+- [ ] **Mode hors ligne** complet
+- [ ] **Analytics** et rapports détaillés
+
+---
+
+**🌾 NAATANGUE - Traçabilité Agricole Souveraine**  
+*Du champ à l'assiette, une traçabilité transparente*
