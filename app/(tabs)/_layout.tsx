@@ -17,8 +17,8 @@ export default function TabLayout() {
         tabBarActiveTintColor: Colors[colorScheme ?? 'light'].tint,
         headerShown: false,
         tabBarButton: HapticTab,
-        // Afficher la barre de navigation seulement si connecté
-        tabBarStyle: user ? undefined : { display: 'none' },
+        // Masquer la barre de navigation sur iOS et afficher seulement si connecté
+        tabBarStyle: user ? { display: 'none' } : { display: 'none' },
       }}>
         <Tabs.Screen
           name="index"
@@ -26,15 +26,6 @@ export default function TabLayout() {
             title: 'Accueil',
             tabBarIcon: ({ color }) => <IconSymbol size={28} name="house.fill" color={color} />,
             // Toujours visible - c'est la page de démarrage
-          }}
-        />
-        <Tabs.Screen
-          name="dashboard"
-          options={{
-            title: 'Dashboard',
-            tabBarIcon: ({ color }) => <IconSymbol size={28} name="square.grid.2x2.fill" color={color} />,
-            // Afficher seulement si connecté
-            href: user ? undefined : null,
           }}
         />
     </Tabs>

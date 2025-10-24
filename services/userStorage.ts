@@ -6,7 +6,7 @@ export interface User {
   phone: string;
   email?: string;
   password: string;
-  role: 'Producteur' | 'Transporteur' | 'Distributeur' | 'Consommateur';
+  role: 'Producteur' | 'Transporteur' | 'Distributeur' | 'Consommateur' | 'Administrateur';
   createdAt: string;
 }
 
@@ -44,9 +44,28 @@ const RESET_CODES_KEY = '@naatangue_reset_codes';
 let memoryStorage: { [key: string]: string } = {};
 
 export class UserStorage {
+  // Vérifier si un administrateur existe déjà
+  static async hasAdmin(): Promise<boolean> {
+    try {
+      const users = await this.getAllUsers();
+      return users.some(user => user.role === 'Administrateur');
+    } catch (error) {
+      console.error('Erreur lors de la vérification de l\'administrateur:', error);
+      return false;
+    }
+  }
+
   // Sauvegarder un nouvel utilisateur
   static async saveUser(user: Omit<User, 'id' | 'createdAt'>): Promise<User> {
     try {
+      // Vérifier si on essaie de créer un admin et qu'un admin existe déjà
+      if (user.role === 'Administrateur') {
+        const hasAdmin = await this.hasAdmin();
+        if (hasAdmin) {
+          throw new Error('Un administrateur existe déjà. Impossible de créer un autre administrateur.');
+        }
+      }
+
       const users = await this.getAllUsers();
       const newUser: User = {
         ...user,
@@ -309,6 +328,74 @@ export class UserStorage {
     } catch (error) {
       console.error('Erreur lors de la mise à jour du mot de passe:', error);
       return false;
+    }
+  }
+
+  // Supprimer un utilisateur
+  static async deleteUser(userId: string): Promise<boolean> {
+    try {
+      const users = await this.getAllUsers();
+      const userIndex = users.findIndex(u => u.id === userId);
+      
+      if (userIndex === -1) {
+        return false;
+      }
+      
+      // Vérifier si c'est le dernier administrateur
+      const userToDelete = users[userIndex];
+      if (userToDelete.role === 'Administrateur') {
+        const adminCount = users.filter(u => u.role === 'Administrateur').length;
+        if (adminCount <= 1) {
+          throw new Error('Impossible de supprimer le dernier administrateur');
+        }
+      }
+      
+      users.splice(userIndex, 1);
+      
+      const storage = getStorage();
+      await storage.setItem(USERS_KEY, JSON.stringify(users));
+      
+      if (Platform.OS !== 'web') {
+        memoryStorage[USERS_KEY] = JSON.stringify(users);
+      }
+      
+      return true;
+    } catch (error) {
+      console.error('Erreur lors de la suppression de l\'utilisateur:', error);
+      throw error;
+    }
+  }
+
+  // Obtenir les statistiques des utilisateurs
+  static async getUserStats(): Promise<{
+    total: number;
+    byRole: Record<string, number>;
+    recent: User[];
+  }> {
+    try {
+      const users = await this.getAllUsers();
+      
+      const byRole = users.reduce((acc, u) => {
+        acc[u.role] = (acc[u.role] || 0) + 1;
+        return acc;
+      }, {} as Record<string, number>);
+      
+      const recent = users
+        .sort((a, b) => new Date(b.createdAt).getTime() - new Date(a.createdAt).getTime())
+        .slice(0, 5);
+      
+      return {
+        total: users.length,
+        byRole,
+        recent
+      };
+    } catch (error) {
+      console.error('Erreur lors de la récupération des statistiques:', error);
+      return {
+        total: 0,
+        byRole: {},
+        recent: []
+      };
     }
   }
 }

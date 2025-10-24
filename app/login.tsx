@@ -2,18 +2,18 @@ import { MaterialIcons } from '@expo/vector-icons';
 import { router } from 'expo-router';
 import React, { useState } from 'react';
 import {
-  Alert,
-  ScrollView,
-  StyleSheet,
-  Text,
-  TextInput,
-  TouchableOpacity,
-  View,
+    Alert,
+    ScrollView,
+    StyleSheet,
+    Text,
+    TextInput,
+    TouchableOpacity,
+    View,
 } from 'react-native';
 import { useAuth } from '../contexts/AuthContext';
 
 export default function LoginScreen() {
-  const { login } = useAuth();
+  const { login, user } = useAuth();
   const [formData, setFormData] = useState({
     emailOrPhone: '',
     password: '',
@@ -37,7 +37,26 @@ export default function LoginScreen() {
           {
             text: 'OK',
             onPress: () => {
-              router.push('/(tabs)/dashboard');
+              // Redirection vers le dashboard spécifique selon le rôle
+              // Utiliser l'utilisateur du contexte
+              if (user) {
+                const role = user.role.toLowerCase();
+                if (role === 'producteur') {
+                  router.push('/acteurs/producteur/dashboard');
+                } else if (role === 'transporteur') {
+                  router.push('/acteurs/transporteur/dashboard');
+                } else if (role === 'distributeur') {
+                  router.push('/acteurs/distributeur/dashboard');
+                } else if (role === 'consommateur') {
+                  router.push('/acteurs/consommateur/dashboard');
+                } else if (role === 'administrateur') {
+                  router.push('/acteurs/administrateur/dashboard');
+                } else {
+                  router.push('/(tabs)');
+                }
+              } else {
+                router.push('/(tabs)');
+              }
             },
           },
         ]);

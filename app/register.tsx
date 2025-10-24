@@ -2,17 +2,18 @@ import { MaterialIcons } from '@expo/vector-icons';
 import { router } from 'expo-router';
 import React, { useState } from 'react';
 import {
-    Alert,
-    Modal,
-    Platform,
-    ScrollView,
-    StyleSheet,
-    Text,
-    TextInput,
-    TouchableOpacity,
-    View,
+  Alert,
+  Modal,
+  Platform,
+  ScrollView,
+  StyleSheet,
+  Text,
+  TextInput,
+  TouchableOpacity,
+  View,
 } from 'react-native';
 import { useAuth } from '../contexts/AuthContext';
+import { UserStorage } from '../services/userStorage';
 
 export default function RegisterScreen() {
   const { register } = useAuth();
@@ -25,6 +26,32 @@ export default function RegisterScreen() {
   });
   const [acceptTerms, setAcceptTerms] = useState(false);
   const [showRoleModal, setShowRoleModal] = useState(false);
+  const [availableRoles, setAvailableRoles] = useState<string[]>([]);
+  const [loadingRoles, setLoadingRoles] = useState(true);
+
+  // Charger les rôles disponibles au montage du composant
+  React.useEffect(() => {
+    const loadAvailableRoles = async () => {
+      try {
+        const hasAdmin = await UserStorage.hasAdmin();
+        const baseRoles = ['Producteur', 'Transporteur', 'Distributeur', 'Consommateur'];
+        
+        // Ajouter le rôle Administrateur seulement s'il n'y a pas encore d'admin
+        if (!hasAdmin) {
+          baseRoles.push('Administrateur');
+        }
+        
+        setAvailableRoles(baseRoles);
+      } catch (error) {
+        console.error('Erreur lors du chargement des rôles:', error);
+        setAvailableRoles(['Producteur', 'Transporteur', 'Distributeur', 'Consommateur']);
+      } finally {
+        setLoadingRoles(false);
+      }
+    };
+    
+    loadAvailableRoles();
+  }, []);
 
   const handleInputChange = (field: string, value: string) => {
     setFormData(prev => ({ ...prev, [field]: value }));
@@ -47,7 +74,7 @@ export default function RegisterScreen() {
         phone: formData.phone,
         email: formData.email || '',
         password: formData.password,
-        role: formData.role as 'Producteur' | 'Transporteur' | 'Distributeur' | 'Consommateur',
+        role: formData.role as 'Producteur' | 'Transporteur' | 'Distributeur' | 'Consommateur' | 'Administrateur',
       });
       
       if (success) {
@@ -67,12 +94,26 @@ export default function RegisterScreen() {
     }
   };
 
-  const roles = [
-    'Producteur',
-    'Transporteur', 
-    'Distributeur',
-    'Consommateur'
-  ];
+  // Utiliser les rôles disponibles dynamiquement
+  const roles = availableRoles;
+
+  // Fonction pour obtenir les informations des rôles
+         const getRoleInfo = (role: string) => {
+           switch (role) {
+             case 'Producteur':
+               return { icon: 'agriculture', description: 'Cultive et produit les denrées' };
+             case 'Transporteur':
+               return { icon: 'local-shipping', description: 'Transporte les produits' };
+             case 'Distributeur':
+               return { icon: 'store', description: 'Revend les produits' };
+             case 'Consommateur':
+               return { icon: 'person', description: 'Achète et consomme les produits' };
+             case 'Administrateur':
+               return { icon: 'admin-panel-settings', description: 'Gère le système et les transactions' };
+             default:
+               return { icon: 'help', description: 'Rôle non défini' };
+           }
+         };
 
   return (
     <ScrollView style={styles.container}>
@@ -164,39 +205,37 @@ export default function RegisterScreen() {
         {/* Rôle */}
         <View style={styles.inputGroup}>
           <Text style={styles.inputLabel}>Vous êtes un :</Text>
-          <TouchableOpacity 
-            style={styles.inputContainer}
-            onPress={() => {
-              if (Platform.OS === 'android') {
-                setShowRoleModal(true);
-              } else {
-                Alert.alert(
-                  'Sélectionner votre rôle',
-                  'Choisissez votre rôle dans la chaîne de traçabilité agricole :',
-                  [
-                    { 
-                      text: '🌱 Producteur\nCultive et produit les denrées', 
-                      onPress: () => handleInputChange('role', 'Producteur') 
-                    },
-                    { 
-                      text: '🚛 Transporteur\nTransporte les produits', 
-                      onPress: () => handleInputChange('role', 'Transporteur') 
-                    },
-                    { 
-                      text: '🏪 Distributeur\nRevend les produits', 
-                      onPress: () => handleInputChange('role', 'Distributeur') 
-                    },
-                    { 
-                      text: '👤 Consommateur\nAchète et consomme les produits', 
-                      onPress: () => handleInputChange('role', 'Consommateur') 
-                    },
-                    { text: 'Annuler', style: 'cancel' }
-                  ],
-                  { cancelable: true }
-                );
-              }
-            }}
-          >
+                 <TouchableOpacity 
+                   style={styles.inputContainer}
+                   onPress={() => {
+                     if (loadingRoles) {
+                       Alert.alert('Chargement', 'Veuillez patienter pendant le chargement des rôles...');
+                       return;
+                     }
+                     
+                     if (Platform.OS === 'android') {
+                       setShowRoleModal(true);
+                     } else {
+                     const roleOptions = roles.map(role => {
+                       const roleInfo = getRoleInfo(role);
+                       return {
+                         text: `${role}\n${roleInfo.description}`,
+                         onPress: () => handleInputChange('role', role)
+                       };
+                     });
+                       
+                       Alert.alert(
+                         'Sélectionner votre rôle',
+                         'Choisissez votre rôle dans la chaîne de traçabilité agricole :',
+                         [
+                           ...roleOptions,
+                           { text: 'Annuler', style: 'cancel' }
+                         ],
+                         { cancelable: true }
+                       );
+                     }
+                   }}
+                 >
             <Text style={[styles.input, { color: formData.role ? '#333333' : '#4CAF50' }]}>
               {formData.role || 'Sélectionnez votre rôle'}
             </Text>
@@ -247,63 +286,38 @@ export default function RegisterScreen() {
               Choisissez votre rôle dans la chaîne de traçabilité agricole
             </Text>
             
-            <View style={styles.roleOptions}>
-              <TouchableOpacity
-                style={styles.roleOption}
-                onPress={() => {
-                  handleInputChange('role', 'Producteur');
-                  setShowRoleModal(false);
-                }}
-              >
-                <MaterialIcons name="agriculture" size={24} color="#4CAF50" />
-                <View style={styles.roleTextContainer}>
-                  <Text style={styles.roleTitle}>Producteur</Text>
-                  <Text style={styles.roleDescription}>Cultive et produit les denrées</Text>
-                </View>
-              </TouchableOpacity>
-
-              <TouchableOpacity
-                style={styles.roleOption}
-                onPress={() => {
-                  handleInputChange('role', 'Transporteur');
-                  setShowRoleModal(false);
-                }}
-              >
-                <MaterialIcons name="local-shipping" size={24} color="#4CAF50" />
-                <View style={styles.roleTextContainer}>
-                  <Text style={styles.roleTitle}>Transporteur</Text>
-                  <Text style={styles.roleDescription}>Transporte les produits</Text>
-                </View>
-              </TouchableOpacity>
-
-              <TouchableOpacity
-                style={styles.roleOption}
-                onPress={() => {
-                  handleInputChange('role', 'Distributeur');
-                  setShowRoleModal(false);
-                }}
-              >
-                <MaterialIcons name="store" size={24} color="#4CAF50" />
-                <View style={styles.roleTextContainer}>
-                  <Text style={styles.roleTitle}>Distributeur</Text>
-                  <Text style={styles.roleDescription}>Revend les produits</Text>
-                </View>
-              </TouchableOpacity>
-
-              <TouchableOpacity
-                style={styles.roleOption}
-                onPress={() => {
-                  handleInputChange('role', 'Consommateur');
-                  setShowRoleModal(false);
-                }}
-              >
-                <MaterialIcons name="person" size={24} color="#4CAF50" />
-                <View style={styles.roleTextContainer}>
-                  <Text style={styles.roleTitle}>Consommateur</Text>
-                  <Text style={styles.roleDescription}>Achète et consomme les produits</Text>
-                </View>
-              </TouchableOpacity>
-            </View>
+                   <View style={styles.roleOptions}>
+                     {roles.map((role, index) => {
+                       const roleInfo = getRoleInfo(role);
+                       const getRoleIcon = (roleName: string) => {
+                         switch (roleName) {
+                           case 'Producteur': return 'agriculture';
+                           case 'Transporteur': return 'local-shipping';
+                           case 'Distributeur': return 'store';
+                           case 'Consommateur': return 'person';
+                           case 'Administrateur': return 'admin-panel-settings';
+                           default: return 'person';
+                         }
+                       };
+                       
+                       return (
+                         <TouchableOpacity
+                           key={index}
+                           style={styles.roleOption}
+                           onPress={() => {
+                             handleInputChange('role', role);
+                             setShowRoleModal(false);
+                           }}
+                         >
+                           <MaterialIcons name={getRoleIcon(role) as any} size={24} color="#4CAF50" />
+                           <View style={styles.roleTextContainer}>
+                             <Text style={styles.roleTitle}>{role}</Text>
+                             <Text style={styles.roleDescription}>{roleInfo.description}</Text>
+                           </View>
+                         </TouchableOpacity>
+                       );
+                     })}
+                   </View>
 
             <TouchableOpacity
               style={styles.modalCancelButton}
