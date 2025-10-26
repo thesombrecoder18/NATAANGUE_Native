@@ -13,16 +13,16 @@ export const mockUsers: User[] = [
   },
   {
     id: '2',
-    username: 'mamadou_diallo',
+    username: 'producteur',
     phone: '701234568',
-    email: 'mamadou@email.com',
+    email: 'producteur@gmail.com',
     password: 'passer',
     role: 'Producteur',
     createdAt: '2024-01-15T08:30:00.000Z',
   },
   {
     id: '3',
-    username: 'fatou_sarr',
+    username: 'producteur2',
     phone: '701234569',
     email: 'fatou@email.com',
     password: 'passer',
@@ -31,7 +31,7 @@ export const mockUsers: User[] = [
   },
   {
     id: '4',
-    username: 'ibrahima_traore',
+    username: 'transporteur',
     phone: '701234570',
     email: 'ibrahima@email.com',
     password: 'passer',
@@ -40,7 +40,7 @@ export const mockUsers: User[] = [
   },
   {
     id: '5',
-    username: 'aissatou_diop',
+    username: 'distributeur',
     phone: '701234571',
     email: 'aissatou@email.com',
     password: 'passer',
@@ -49,7 +49,7 @@ export const mockUsers: User[] = [
   },
   {
     id: '6',
-    username: 'moussa_ndiaye',
+    username: 'consommateur',
     phone: '701234572',
     email: 'moussa@email.com',
     password: 'passer',
@@ -58,7 +58,7 @@ export const mockUsers: User[] = [
   },
   {
     id: '7',
-    username: 'khadija_fall',
+    username: 'consommateur2',
     phone: '701234573',
     email: 'khadija@email.com',
     password: 'passer',
@@ -67,7 +67,7 @@ export const mockUsers: User[] = [
   },
   {
     id: '8',
-    username: 'cheikh_ba',
+    username: 'transporteur2',
     phone: '701234574',
     email: 'cheikh@email.com',
     password: 'passer',

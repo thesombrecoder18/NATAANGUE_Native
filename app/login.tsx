@@ -33,33 +33,28 @@ export default function LoginScreen() {
       const success = await login(formData.emailOrPhone, formData.password);
       
       if (success) {
-        Alert.alert('Succès', 'Connexion réussie !', [
-          {
-            text: 'OK',
-            onPress: () => {
-              // Redirection vers le dashboard spécifique selon le rôle
-              // Utiliser l'utilisateur du contexte
-              if (user) {
-                const role = user.role.toLowerCase();
-                if (role === 'producteur') {
-                  router.push('/acteurs/producteur/dashboard');
-                } else if (role === 'transporteur') {
-                  router.push('/acteurs/transporteur/dashboard');
-                } else if (role === 'distributeur') {
-                  router.push('/acteurs/distributeur/dashboard');
-                } else if (role === 'consommateur') {
-                  router.push('/acteurs/consommateur/dashboard');
-                } else if (role === 'administrateur') {
-                  router.push('/acteurs/administrateur/dashboard');
-                } else {
-                  router.push('/(tabs)');
-                }
-              } else {
-                router.push('/(tabs)');
-              }
-            },
-          },
-        ]);
+        // Récupérer l'utilisateur directement depuis le stockage
+        const { UserStorage } = await import('../services/userStorage');
+        const authenticatedUser = await UserStorage.getCurrentUser();
+        
+        if (authenticatedUser) {
+          const role = authenticatedUser.role.toLowerCase();
+          if (role === 'producteur') {
+            router.push('/acteurs/producteur/dashboard');
+          } else if (role === 'transporteur') {
+            router.push('/acteurs/transporteur/dashboard');
+          } else if (role === 'distributeur') {
+            router.push('/acteurs/distributeur/dashboard');
+          } else if (role === 'consommateur') {
+            router.push('/acteurs/consommateur/dashboard');
+          } else if (role === 'administrateur') {
+            router.push('/acteurs/administrateur/dashboard');
+          } else {
+            router.push('/(tabs)');
+          }
+        } else {
+          router.push('/(tabs)');
+        }
       } else {
         Alert.alert('Erreur', 'Identifiants incorrects');
       }

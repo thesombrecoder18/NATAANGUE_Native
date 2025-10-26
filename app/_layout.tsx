@@ -45,10 +45,24 @@ function RootLayoutContent() {
         <Stack.Screen name="login" options={{ headerShown: false }} />
         <Stack.Screen name="register" options={{ headerShown: false }} />
         <Stack.Screen name="forgot-password" options={{ headerShown: false }} />
+        {/* Routes Producteur */}
         <Stack.Screen name="acteurs/producteur/dashboard" options={{ headerShown: false }} />
+        <Stack.Screen name="acteurs/producteur/produits" options={{ headerShown: false }} />
+        <Stack.Screen name="acteurs/producteur/cultures" options={{ headerShown: false }} />
+        <Stack.Screen name="acteurs/producteur/scanner" options={{ headerShown: false }} />
+        <Stack.Screen name="acteurs/producteur/parametres" options={{ headerShown: false }} />
+        <Stack.Screen name="acteurs/producteur/profil" options={{ headerShown: false }} />
+        
+        {/* Routes Transporteur */}
         <Stack.Screen name="acteurs/transporteur/dashboard" options={{ headerShown: false }} />
+        
+        {/* Routes Distributeur */}
         <Stack.Screen name="acteurs/distributeur/dashboard" options={{ headerShown: false }} />
+        
+        {/* Routes Consommateur */}
         <Stack.Screen name="acteurs/consommateur/dashboard" options={{ headerShown: false }} />
+        
+        {/* Routes Administrateur */}
         <Stack.Screen name="acteurs/administrateur/dashboard" options={{ headerShown: false }} />
         <Stack.Screen name="acteurs/administrateur/profile" options={{ headerShown: false }} />
         <Stack.Screen name="acteurs/administrateur/transactions" options={{ headerShown: false }} />

@@ -27,16 +27,14 @@ export default function ProducteurDashboardScreen() {
   };
 
   const handleProfile = () => {
-    console.log('Profil Producteur');
+    router.push('/acteurs/producteur/profil');
   };
 
   const producteurActions = [
-    { icon: 'add-circle', title: 'Créer un Lot', action: () => console.log('Créer un Lot') },
-    { icon: 'qr-code-scanner', title: 'Scanner QR Code', action: () => console.log('Scanner QR Code') },
-    { icon: 'assessment', title: 'Mes Récoltes', action: () => console.log('Mes Récoltes') },
-    { icon: 'inventory', title: 'Mon Inventaire', action: () => console.log('Mon Inventaire') },
-    { icon: 'location-on', title: 'Géolocalisation', action: () => console.log('Géolocalisation') },
-    { icon: 'history', title: 'Historique', action: () => console.log('Historique') },
+    { icon: 'eco', title: 'Mes Produits', action: () => router.push('/acteurs/producteur/produits') },
+    { icon: 'agriculture', title: 'Mes Cultures', action: () => router.push('/acteurs/producteur/cultures') },
+    { icon: 'qr-code-scanner', title: 'Scanner QR', action: () => router.push('/acteurs/producteur/scanner') },
+    { icon: 'settings', title: 'Paramètres', action: () => router.push('/acteurs/producteur/parametres') },
   ];
 
   if (!user) {
@@ -75,7 +73,7 @@ export default function ProducteurDashboardScreen() {
         <View style={styles.welcomeSection}>
           <Text style={styles.welcomeTitle}>Tableau de Bord Producteur</Text>
           <Text style={styles.welcomeSubtitle}>
-            Gérez vos cultures, créez des lots et suivez vos récoltes pour une traçabilité complète.
+            Gérez vos cultures, créez des produits et suivez vos récoltes pour une traçabilité complète.
           </Text>
         </View>
 
@@ -135,6 +133,30 @@ export default function ProducteurDashboardScreen() {
           </View>
         </View>
       </ScrollView>
+
+      {/* Navigation Bottom */}
+      <View style={styles.bottomNav}>
+        <TouchableOpacity style={styles.navItem} onPress={() => router.push('/acteurs/producteur/dashboard')}>
+          <MaterialIcons name="dashboard" size={24} color={Colors.roleColors.Producteur} />
+          <Text style={styles.navText}>Dashboard</Text>
+        </TouchableOpacity>
+        <TouchableOpacity style={styles.navItem} onPress={() => router.push('/acteurs/producteur/produits')}>
+          <MaterialIcons name="eco" size={24} color={Colors.roleColors.Producteur} />
+          <Text style={styles.navText}>Produits</Text>
+        </TouchableOpacity>
+        <TouchableOpacity style={styles.navItem} onPress={() => router.push('/acteurs/producteur/scanner')}>
+          <MaterialIcons name="qr-code-scanner" size={24} color={Colors.roleColors.Producteur} />
+          <Text style={styles.navText}>Scanner</Text>
+        </TouchableOpacity>
+        <TouchableOpacity style={styles.navItem} onPress={() => router.push('/acteurs/producteur/cultures')}>
+          <MaterialIcons name="agriculture" size={24} color={Colors.roleColors.Producteur} />
+          <Text style={styles.navText}>Cultures</Text>
+        </TouchableOpacity>
+        <TouchableOpacity style={styles.navItem} onPress={() => router.push('/acteurs/producteur/parametres')}>
+          <MaterialIcons name="settings" size={24} color={Colors.roleColors.Producteur} />
+          <Text style={styles.navText}>Paramètres</Text>
+        </TouchableOpacity>
+      </View>
     </View>
   );
 }
@@ -306,5 +328,22 @@ const styles = StyleSheet.create({
     color: Colors.textPrimary,
     marginLeft: 12,
     flex: 1,
+  },
+  bottomNav: {
+    flexDirection: 'row',
+    backgroundColor: '#FFFFFF',
+    borderTopWidth: 1,
+    borderTopColor: '#E0E0E0',
+    paddingVertical: 8,
+    justifyContent: 'space-evenly',
+  },
+  navItem: {
+    alignItems: 'center',
+    flex: 1,
+  },
+  navText: {
+    fontSize: 12,
+    fontWeight: '500',
+    marginTop: 4,
   },
 });
