@@ -5,11 +5,15 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="0ba029d8-7622-4628-8c18-e4f924f7edf3" name="Changes" comment="">
+      <change beforePath="$PROJECT_DIR$/.idea/caches/deviceStreaming.xml" beforeDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/app/_layout.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/app/_layout.tsx" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/acteurs/distributeur/dashboard.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/app/acteurs/distributeur/dashboard.tsx" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/app/acteurs/producteur/dashboard.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/app/acteurs/producteur/dashboard.tsx" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/login.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/app/login.tsx" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/services/mockData.ts" beforeDir="false" afterPath="$PROJECT_DIR$/services/mockData.ts" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/acteurs/producteur/parametres.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/app/acteurs/producteur/parametres.tsx" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/acteurs/transporteur/dashboard.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/app/acteurs/transporteur/dashboard.tsx" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/register.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/app/register.tsx" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/constants/colors.ts" beforeDir="false" afterPath="$PROJECT_DIR$/constants/colors.ts" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />

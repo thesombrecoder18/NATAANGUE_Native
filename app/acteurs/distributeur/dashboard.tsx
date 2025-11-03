@@ -4,6 +4,7 @@ import React from 'react';
 import { Alert, ScrollView, StyleSheet, Text, TouchableOpacity, View } from 'react-native';
 import { Colors } from '../../../constants/colors';
 import { useAuth } from '../../../contexts/AuthContext';
+import NotificationBar from '../../components/NotificationBar';
 
 export default function DistributeurDashboardScreen() {
   const { user, logout } = useAuth();
@@ -27,16 +28,15 @@ export default function DistributeurDashboardScreen() {
   };
 
   const handleProfile = () => {
-    console.log('Profil Distributeur');
+    router.push('/acteurs/distributeur/profil');
   };
 
   const distributeurActions = [
-    { icon: 'inventory', title: 'Mon Inventaire', action: () => console.log('Mon Inventaire') },
-    { icon: 'qr-code-scanner', title: 'Scanner QR Code', action: () => console.log('Scanner QR Code') },
-    { icon: 'sell', title: 'Vendre', action: () => console.log('Vendre') },
-    { icon: 'store', title: 'Ma Boutique', action: () => console.log('Ma Boutique') },
-    { icon: 'people', title: 'Clients', action: () => console.log('Clients') },
-    { icon: 'history', title: 'Historique', action: () => console.log('Historique') },
+    { icon: 'sell', title: 'Demandes d\'achat', action: () => router.push('/acteurs/distributeur/commandes') },
+    { icon: 'inventory', title: 'Réceptions', action: () => router.push('/acteurs/distributeur/receptions') },
+    { icon: 'qr-code-scanner', title: 'Scanner', action: () => router.push('/acteurs/distributeur/scanner') },
+    { icon: 'settings', title: 'Paramètres', action: () => router.push('/acteurs/distributeur/parametres') },
+    { icon: 'person', title: 'Mon Profil', action: () => router.push('/acteurs/distributeur/profil') },
   ];
 
   if (!user) {
@@ -49,6 +49,7 @@ export default function DistributeurDashboardScreen() {
 
   return (
     <View style={styles.container}>
+      <NotificationBar />
       {/* En-tête avec informations utilisateur */}
       <View style={[styles.header, { backgroundColor: Colors.roleColors.Distributeur }]}>
         <View style={styles.headerContent}>
@@ -135,6 +136,31 @@ export default function DistributeurDashboardScreen() {
           </View>
         </View>
       </ScrollView>
+      {/* Bottom navigation */}
+      <View style={styles.bottomNav}>
+      <TouchableOpacity style={styles.navItem} onPress={() => router.push('/acteurs/distributeur/dashboard')}>
+        <MaterialIcons name="dashboard" size={24} color={Colors.roleColors.Distributeur} />
+        <Text style={styles.navText}>Dashboard</Text>
+      </TouchableOpacity>
+      <TouchableOpacity style={styles.navItem} onPress={() => router.push('/acteurs/distributeur/commandes')}>
+        <MaterialIcons name="sell" size={24} color="#999" />
+        <Text style={styles.navText}>Commandes</Text>
+      </TouchableOpacity>
+      <TouchableOpacity style={[styles.navItem, styles.navItemCenter]} onPress={() => router.push('/acteurs/distributeur/scanner')}>
+        <View style={[styles.scanButton, { backgroundColor: Colors.roleColors.Distributeur }]}>
+          <MaterialIcons name="qr-code-scanner" size={24} color="#FFF" />
+        </View>
+        <Text style={styles.navText}>Scanner</Text>
+      </TouchableOpacity>
+      <TouchableOpacity style={styles.navItem} onPress={() => router.push('/acteurs/distributeur/receptions')}>
+        <MaterialIcons name="inventory" size={24} color="#999" />
+        <Text style={styles.navText}>Réceptions</Text>
+      </TouchableOpacity>
+      <TouchableOpacity style={styles.navItem} onPress={() => router.push('/acteurs/distributeur/parametres')}>
+        <MaterialIcons name="settings" size={24} color="#999" />
+        <Text style={styles.navText}>Paramètres</Text>
+      </TouchableOpacity>
+      </View>
     </View>
   );
 }
@@ -306,5 +332,43 @@ const styles = StyleSheet.create({
     color: Colors.textPrimary,
     marginLeft: 12,
     flex: 1,
+  },
+  bottomNav: {
+    position: 'absolute',
+    bottom: 0,
+    left: 0,
+    right: 0,
+    height: 70,
+    backgroundColor: Colors.backgroundWhite,
+    flexDirection: 'row',
+    alignItems: 'center',
+    justifyContent: 'space-evenly',
+    borderTopWidth: 1,
+    borderTopColor: Colors.lightGray,
+    paddingBottom: 10,
+  },
+  navItem: {
+    alignItems: 'center',
+    justifyContent: 'center',
+  },
+  navText: {
+    fontSize: 12,
+    color: '#999',
+    marginTop: 4,
+  },
+  navItemCenter: {
+    marginTop: -25,
+  },
+  scanButton: {
+    width: 56,
+    height: 56,
+    borderRadius: 28,
+    alignItems: 'center',
+    justifyContent: 'center',
+    shadowColor: '#000',
+    shadowOffset: { width: 0, height: 2 },
+    shadowOpacity: 0.2,
+    shadowRadius: 4,
+    elevation: 4,
   },
 });

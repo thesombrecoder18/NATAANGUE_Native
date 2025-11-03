@@ -3,6 +3,7 @@ import { router } from 'expo-router';
 import React from 'react';
 import { Alert, ScrollView, StyleSheet, Text, TouchableOpacity, View } from 'react-native';
 import { Colors } from '../../../constants/colors';
+import NotificationBar from '../../components/NotificationBar';
 import { useAuth } from '../../../contexts/AuthContext';
 
 export default function ProducteurDashboardScreen() {
@@ -33,6 +34,10 @@ export default function ProducteurDashboardScreen() {
   const producteurActions = [
     { icon: 'eco', title: 'Mes Produits', action: () => router.push('/acteurs/producteur/produits') },
     { icon: 'agriculture', title: 'Mes Cultures', action: () => router.push('/acteurs/producteur/cultures') },
+    { icon: 'local-shipping', title: 'Transporteurs', action: () => router.push('/acteurs/producteur/transporteurs') },
+    { icon: 'sell', title: 'Demandes Distributeurs', action: () => router.push('/acteurs/producteur/demandes-distributeurs') },
+    { icon: 'assignment', title: 'Mes Demandes', action: () => router.push('/acteurs/producteur/mes-demandes') },
+    { icon: 'track-changes', title: 'Suivi Livraison', action: () => router.push('/acteurs/producteur/suivi-livraison') },
     { icon: 'qr-code-scanner', title: 'Scanner QR', action: () => router.push('/acteurs/producteur/scanner') },
     { icon: 'settings', title: 'Paramètres', action: () => router.push('/acteurs/producteur/parametres') },
   ];
@@ -47,6 +52,7 @@ export default function ProducteurDashboardScreen() {
 
   return (
     <View style={styles.container}>
+      <NotificationBar />
       {/* En-tête avec informations utilisateur */}
       <View style={[styles.header, { backgroundColor: Colors.roleColors.Producteur }]}>
         <View style={styles.headerContent}>
@@ -141,19 +147,19 @@ export default function ProducteurDashboardScreen() {
           <Text style={styles.navText}>Dashboard</Text>
         </TouchableOpacity>
         <TouchableOpacity style={styles.navItem} onPress={() => router.push('/acteurs/producteur/produits')}>
-          <MaterialIcons name="eco" size={24} color={Colors.roleColors.Producteur} />
+          <MaterialIcons name="eco" size={24} color="#999" />
           <Text style={styles.navText}>Produits</Text>
         </TouchableOpacity>
-        <TouchableOpacity style={styles.navItem} onPress={() => router.push('/acteurs/producteur/scanner')}>
-          <MaterialIcons name="qr-code-scanner" size={24} color={Colors.roleColors.Producteur} />
-          <Text style={styles.navText}>Scanner</Text>
+        <TouchableOpacity style={styles.navItem} onPress={() => router.push('/acteurs/producteur/transporteurs')}>
+          <MaterialIcons name="local-shipping" size={24} color="#999" />
+          <Text style={styles.navText}>Transporteurs</Text>
         </TouchableOpacity>
-        <TouchableOpacity style={styles.navItem} onPress={() => router.push('/acteurs/producteur/cultures')}>
-          <MaterialIcons name="agriculture" size={24} color={Colors.roleColors.Producteur} />
-          <Text style={styles.navText}>Cultures</Text>
+        <TouchableOpacity style={styles.navItem} onPress={() => router.push('/acteurs/producteur/suivi-livraison')}>
+          <MaterialIcons name="track-changes" size={24} color="#999" />
+          <Text style={styles.navText}>Suivi</Text>
         </TouchableOpacity>
         <TouchableOpacity style={styles.navItem} onPress={() => router.push('/acteurs/producteur/parametres')}>
-          <MaterialIcons name="settings" size={24} color={Colors.roleColors.Producteur} />
+          <MaterialIcons name="settings" size={24} color="#999" />
           <Text style={styles.navText}>Paramètres</Text>
         </TouchableOpacity>
       </View>

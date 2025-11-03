@@ -40,7 +40,7 @@ export const Colors = {
   // Couleurs spécifiques aux rôles (toutes en vert pour cohérence)
   roleColors: {
     Producteur: '#4CAF50',
-    Transporteur: '#8BC34A',
+    Transporteur: '#4CAF50',
     Distributeur: '#66BB6A',
     Consommateur: '#2E7D32',
     Administrateur: '#4CAF50',

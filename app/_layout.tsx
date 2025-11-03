@@ -45,19 +45,35 @@ function RootLayoutContent() {
         <Stack.Screen name="login" options={{ headerShown: false }} />
         <Stack.Screen name="register" options={{ headerShown: false }} />
         <Stack.Screen name="forgot-password" options={{ headerShown: false }} />
+        <Stack.Screen name="guide-utilisation" options={{ headerShown: false }} />
         {/* Routes Producteur */}
         <Stack.Screen name="acteurs/producteur/dashboard" options={{ headerShown: false }} />
         <Stack.Screen name="acteurs/producteur/produits" options={{ headerShown: false }} />
         <Stack.Screen name="acteurs/producteur/cultures" options={{ headerShown: false }} />
+        <Stack.Screen name="acteurs/producteur/transporteurs" options={{ headerShown: false }} />
+        <Stack.Screen name="acteurs/producteur/suivi-livraison" options={{ headerShown: false }} />
+        <Stack.Screen name="acteurs/producteur/mes-demandes" options={{ headerShown: false }} />
         <Stack.Screen name="acteurs/producteur/scanner" options={{ headerShown: false }} />
         <Stack.Screen name="acteurs/producteur/parametres" options={{ headerShown: false }} />
         <Stack.Screen name="acteurs/producteur/profil" options={{ headerShown: false }} />
+        <Stack.Screen name="acteurs/producteur/demandes-distributeurs" options={{ headerShown: false }} />
         
         {/* Routes Transporteur */}
         <Stack.Screen name="acteurs/transporteur/dashboard" options={{ headerShown: false }} />
+        <Stack.Screen name="acteurs/transporteur/livraisons" options={{ headerShown: false }} />
+        <Stack.Screen name="acteurs/transporteur/entrepots" options={{ headerShown: false }} />
+        <Stack.Screen name="acteurs/transporteur/demandes-recues" options={{ headerShown: false }} />
+        <Stack.Screen name="acteurs/transporteur/scanner" options={{ headerShown: false }} />
+        <Stack.Screen name="acteurs/transporteur/profil" options={{ headerShown: false }} />
+        <Stack.Screen name="acteurs/transporteur/parametres" options={{ headerShown: false }} />
         
         {/* Routes Distributeur */}
         <Stack.Screen name="acteurs/distributeur/dashboard" options={{ headerShown: false }} />
+        <Stack.Screen name="acteurs/distributeur/commandes" options={{ headerShown: false }} />
+        <Stack.Screen name="acteurs/distributeur/receptions" options={{ headerShown: false }} />
+        <Stack.Screen name="acteurs/distributeur/scanner" options={{ headerShown: false }} />
+        <Stack.Screen name="acteurs/distributeur/parametres" options={{ headerShown: false }} />
+        <Stack.Screen name="acteurs/distributeur/profil" options={{ headerShown: false }} />
         
         {/* Routes Consommateur */}
         <Stack.Screen name="acteurs/consommateur/dashboard" options={{ headerShown: false }} />

@@ -3,6 +3,7 @@ import { router } from 'expo-router';
 import React from 'react';
 import { Alert, ScrollView, StyleSheet, Text, TouchableOpacity, View } from 'react-native';
 import { Colors } from '../../../constants/colors';
+import NotificationBar from '../../components/NotificationBar';
 import { useAuth } from '../../../contexts/AuthContext';
 
 export default function TransporteurDashboardScreen() {
@@ -27,16 +28,15 @@ export default function TransporteurDashboardScreen() {
   };
 
   const handleProfile = () => {
-    console.log('Profil Transporteur');
+    router.push('/acteurs/transporteur/profil');
   };
 
   const transporteurActions = [
-    { icon: 'local-shipping', title: 'Mes Transports', action: () => console.log('Mes Transports') },
-    { icon: 'qr-code-scanner', title: 'Scanner QR Code', action: () => console.log('Scanner QR Code') },
-    { icon: 'update', title: 'Mettre à Jour', action: () => console.log('Mettre à Jour') },
-    { icon: 'location-on', title: 'Suivi GPS', action: () => console.log('Suivi GPS') },
-    { icon: 'schedule', title: 'Planning', action: () => console.log('Planning') },
-    { icon: 'history', title: 'Historique', action: () => console.log('Historique') },
+    { icon: 'local-shipping', title: 'Mes Livraisons', action: () => router.push('/acteurs/transporteur/livraisons') },
+    { icon: 'assignment', title: 'Demandes Reçues', action: () => router.push('/acteurs/transporteur/demandes-recues') },
+    { icon: 'warehouse', title: 'Mes Entrepôts', action: () => router.push('/acteurs/transporteur/entrepots') },
+    { icon: 'qr-code-scanner', title: 'Scanner', action: () => router.push('/acteurs/transporteur/scanner') },
+    { icon: 'person', title: 'Profil', action: () => router.push('/acteurs/transporteur/profil') },
   ];
 
   if (!user) {
@@ -49,8 +49,9 @@ export default function TransporteurDashboardScreen() {
 
   return (
     <View style={styles.container}>
+      <NotificationBar />
       {/* En-tête avec informations utilisateur */}
-      <View style={[styles.header, { backgroundColor: Colors.roleColors.Transporteur }]}>
+      <View style={[styles.header, { backgroundColor: '#4CAF50' }]}>
         <View style={styles.headerContent}>
           <View style={styles.userInfo}>
             <MaterialIcons name="local-shipping" size={32} color="#FFFFFF" />
@@ -75,7 +76,7 @@ export default function TransporteurDashboardScreen() {
         <View style={styles.welcomeSection}>
           <Text style={styles.welcomeTitle}>Tableau de Bord Transporteur</Text>
           <Text style={styles.welcomeSubtitle}>
-            Suivez et mettez à jour le statut de transport de vos produits dans la chaîne de traçabilité.
+            Gérez vos livraisons, entrepôts et assurez la traçabilité complète des produits agricoles.
           </Text>
         </View>
 
@@ -86,10 +87,10 @@ export default function TransporteurDashboardScreen() {
             {transporteurActions.map((action, index) => (
               <TouchableOpacity
                 key={index}
-                style={[styles.actionCard, { borderColor: Colors.roleColors.Transporteur }]}
+                style={[styles.actionCard, { borderColor: '#4CAF50' }]}
                 onPress={action.action}
               >
-                <MaterialIcons name={action.icon as any} size={32} color={Colors.roleColors.Transporteur} />
+                <MaterialIcons name={action.icon as any} size={32} color="#4CAF50" />
                 <Text style={styles.actionTitle}>{action.title}</Text>
               </TouchableOpacity>
             ))}
@@ -100,41 +101,65 @@ export default function TransporteurDashboardScreen() {
         <View style={styles.statsSection}>
           <Text style={styles.sectionTitle}>Mes Statistiques</Text>
           <View style={styles.statsGrid}>
-            <View style={[styles.statCard, { backgroundColor: Colors.roleColors.Transporteur + '20' }]}>
-              <MaterialIcons name="local-shipping" size={24} color={Colors.roleColors.Transporteur} />
-              <Text style={styles.statValue}>4</Text>
-              <Text style={styles.statLabel}>Transports</Text>
+            <View style={[styles.statCard, { backgroundColor: '#4CAF50' + '20' }]}>
+              <MaterialIcons name="local-shipping" size={24} color="#4CAF50" />
+              <Text style={styles.statValue}>8</Text>
+              <Text style={styles.statLabel}>Livraisons</Text>
             </View>
-            <View style={[styles.statCard, { backgroundColor: Colors.roleColors.Transporteur + '20' }]}>
-              <MaterialIcons name="trending-up" size={24} color={Colors.roleColors.Transporteur} />
-              <Text style={styles.statValue}>1</Text>
-              <Text style={styles.statLabel}>En Cours</Text>
+            <View style={[styles.statCard, { backgroundColor: '#4CAF50' + '20' }]}>
+              <MaterialIcons name="warehouse" size={24} color="#4CAF50" />
+              <Text style={styles.statValue}>2</Text>
+              <Text style={styles.statLabel}>Entrepôts</Text>
             </View>
-            <View style={[styles.statCard, { backgroundColor: Colors.roleColors.Transporteur + '20' }]}>
-              <MaterialIcons name="check-circle" size={24} color={Colors.roleColors.Transporteur} />
+            <View style={[styles.statCard, { backgroundColor: '#4CAF50' + '20' }]}>
+              <MaterialIcons name="trending-up" size={24} color="#4CAF50" />
               <Text style={styles.statValue}>3</Text>
-              <Text style={styles.statLabel}>Terminés</Text>
+              <Text style={styles.statLabel}>En Cours</Text>
             </View>
           </View>
         </View>
 
         {/* Informations supplémentaires */}
         <View style={styles.infoSection}>
-          <Text style={styles.sectionTitle}>Mes Transports</Text>
+          <Text style={styles.sectionTitle}>Livraisons Récentes</Text>
           <View style={styles.infoCard}>
-            <MaterialIcons name="local-shipping" size={20} color={Colors.roleColors.Transporteur} />
-            <Text style={styles.infoText}>Tomates Bio - En cours de transport</Text>
+            <MaterialIcons name="local-shipping" size={20} color="#4CAF50" />
+            <Text style={styles.infoText}>Tomates Bio - En cours de livraison vers Dakar</Text>
           </View>
           <View style={styles.infoCard}>
-            <MaterialIcons name="local-shipping" size={20} color={Colors.roleColors.Transporteur} />
-            <Text style={styles.infoText}>Oignons Bio - Livraison terminée</Text>
+            <MaterialIcons name="warehouse" size={20} color="#4CAF50" />
+            <Text style={styles.infoText}>Riz Bio - Stocké à l'entrepôt de Thiès</Text>
           </View>
           <View style={styles.infoCard}>
-            <MaterialIcons name="local-shipping" size={20} color={Colors.roleColors.Transporteur} />
-            <Text style={styles.infoText}>Riz Bio - En attente de chargement</Text>
+            <MaterialIcons name="check-circle" size={20} color="#4CAF50" />
+            <Text style={styles.infoText}>Oignons Bio - Livraison terminée à Saint-Louis</Text>
           </View>
         </View>
       </ScrollView>
+
+      {/* Bottom Navigation */}
+      <View style={styles.bottomNav}>
+        <TouchableOpacity style={styles.navItem} onPress={() => router.push('/acteurs/transporteur/dashboard')}>
+          <MaterialIcons name="dashboard" size={24} color="#4CAF50" />
+          <Text style={styles.navLabel}>Dashboard</Text>
+        </TouchableOpacity>
+        <TouchableOpacity style={styles.navItem} onPress={() => router.push('/acteurs/transporteur/livraisons')}>
+          <MaterialIcons name="local-shipping" size={24} color="#999" />
+          <Text style={styles.navLabel}>Livraisons</Text>
+        </TouchableOpacity>
+        <TouchableOpacity style={styles.navItem} onPress={() => router.push('/acteurs/transporteur/scanner')}>
+          <MaterialIcons name="qr-code-scanner" size={24} color="#999" />
+          <Text style={styles.navLabel}>Scanner</Text>
+        </TouchableOpacity>
+        <TouchableOpacity style={styles.navItem} onPress={() => router.push('/acteurs/transporteur/entrepots')}>
+          <MaterialIcons name="warehouse" size={24} color="#999" />
+          <Text style={styles.navLabel}>Entrepôts</Text>
+        </TouchableOpacity>
+        <TouchableOpacity style={styles.navItem} onPress={() => router.push('/acteurs/transporteur/parametres')}>
+          <MaterialIcons name="settings" size={24} color="#999" />
+          <Text style={styles.navLabel}>Paramètres</Text>
+        </TouchableOpacity>
+      </View>
     </View>
   );
 }
@@ -306,5 +331,23 @@ const styles = StyleSheet.create({
     color: Colors.textPrimary,
     marginLeft: 12,
     flex: 1,
+  },
+  bottomNav: {
+    flexDirection: 'row',
+    backgroundColor: '#FFFFFF',
+    paddingVertical: 10,
+    paddingHorizontal: 5,
+    borderTopWidth: 1,
+    borderTopColor: '#E0E0E0',
+    justifyContent: 'space-evenly',
+  },
+  navItem: {
+    alignItems: 'center',
+    flex: 1,
+  },
+  navLabel: {
+    fontSize: 10,
+    color: '#999',
+    marginTop: 4,
   },
 });

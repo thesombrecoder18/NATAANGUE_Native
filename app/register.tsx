@@ -171,7 +171,7 @@ export default function RegisterScreen() {
         {/* Adresse e-mail (facultatif) */}
         <View style={styles.inputGroup}>
           <Text style={styles.inputLabel}>
-            Adresse e-mail <Text style={styles.optionalText}>(facultatif)</Text>
+            Adresse e-mail
           </Text>
           <View style={styles.inputContainer}>
             <TextInput

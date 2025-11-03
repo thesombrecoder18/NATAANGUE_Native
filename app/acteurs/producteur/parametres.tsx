@@ -25,14 +25,7 @@ export default function ProducteurParametresScreen() {
   };
 
   const handleHowToUse = () => {
-    Alert.alert(
-      'Comment utiliser l\'app',
-      'Guide simple:\n\n• Ajouter vos produits\n• Marquer vos champs\n• Prendre des photos\n• Voir vos ventes',
-      [
-        { text: 'Fermer', style: 'cancel' },
-        { text: 'Voir guide', onPress: () => console.log('Ouverture guide') }
-      ]
-    );
+    router.push('/guide-utilisation');
   };
 
   const handleRefreshData = () => {
